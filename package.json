@@ -1,0 +1,20 @@
+{
+  "name": "bot-sort-top-trending_ossn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sort_top_trending": "node scripts/sort_top_trending.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mssql": "^7.3.0",
+    "mysql": "^2.18.1",
+    "node-schedule": "^2.1.0"
+  }
+}
