@@ -8,10 +8,10 @@
     npm install *
 
 3. Create .env file
-    HOST     = 
-    USERNAME = 
-    PASSWORD = 
-    DATABASE = 
+    HOST        = 
+    USERNAME_DB = 
+    PASSWORD    = 
+    DATABASE    = 
 4. Run app
     ## run sort top trending ossn ##
     npm run sort_top_trending

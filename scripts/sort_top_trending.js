@@ -16,17 +16,17 @@ function runSortTopTrending(){
     //});
 };
 
-//runSortTopTrending();
+runSortTopTrending();
 
 // schedule.scheduleJob({hour: 2, minute: 00}, function () {
 //     console.log("Chờ run");
 //     runSortTopTrending();
 // });
 
-console.log("Chờ run");
-var index = 0;
-schedule.scheduleJob("*/30 * * * * *", function() {
-    index += 1;
-    runSortTopTrending();
-    console.log("Chờ run " + index);
-});
+// console.log("Chờ run");
+// var index = 0;
+// schedule.scheduleJob("*/30 * * * * *", function() {
+//     index += 1;
+//     runSortTopTrending();
+//     console.log("Chờ run " + index);
+// });

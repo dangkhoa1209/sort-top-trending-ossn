@@ -32,7 +32,7 @@ var data_ossn_sum_point         = [];
 
 var con = mysql.createConnection({
     host      : process.env.HOST,
-    user      : process.env.USERNAME,
+    user      : process.env.USERNAME_DB,
     password  : process.env.PASSWORD,
     database  : process.env.DATABASE
 });
@@ -43,10 +43,11 @@ con.connect(function(err) {});
 
 module.exports.sort = async function(callback){
     console.log("Chay ne");
-    await sortSocial('facebook');
-    await sortSocial('tiktok');
-    await sortSocial('youtube');
-    await sortSocial('twitter');
+    createData();
+    //await sortSocial('facebook');
+    //await sortSocial('tiktok');
+    //await sortSocial('youtube');
+    //await sortSocial('twitter');
     //con.end();
 }
 
