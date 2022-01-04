@@ -2,8 +2,8 @@
 var mysql = require('mysql');
 require('dotenv').config();
 
-
-const timenow = Math.ceil( (new Date().getTime()) / 1000 ) - 24*60*60 * 4;
+//
+const timenow = Math.ceil( (new Date().getTime()) / 1000 ) - 24*60*60;
 
 const tables = {
     ossn_object            : "ossn_object",
@@ -42,13 +42,41 @@ con.connect(function(err) {});
 
 
 module.exports.sort = async function(callback){
-    console.log("Chay ne");
-    createData();
-    //await sortSocial('facebook');
-    //await sortSocial('tiktok');
-    //await sortSocial('youtube');
-    //await sortSocial('twitter');
+
+    if(con.state != 'authenticated'){
+        if(! await checkBD()){
+            createData();
+        }
+        await sortSocial('facebook');
+        await sortSocial('tiktok');
+        await sortSocial('youtube');
+        await sortSocial('twitter');
+    }else{
+        con.connect(function(err) {});
+    }
+
+    
     //con.end();
+    callback = true;
+}
+
+//ALTER TABLE ossn_object_top AUTO_INCREMENT = 1;
+function checkBD(){
+    return new Promise((resolve) => {
+        con.query(`SELECT * FROM ossn_object_top`, function (err, result) {
+            if(err){
+                console.log("Error connect DB");
+                resolve(false);
+            }
+
+            if(result.length == 0){
+                resolve(false);
+            }else{
+                resolve(true);
+            }
+        });
+    });
+    
 }
 
 function createData(){
@@ -75,6 +103,8 @@ async function sortSocial(type_social_tmp){
         await setCountShare();
         await setPoint();
         await sortTop();
+        await addDataToDatabase(type_social_tmp);
+    }else{
         await addDataToDatabase(type_social_tmp);
     }
     return;
@@ -137,20 +167,35 @@ function addDataToDatabase(type){
     }
 
 
-
-    data_ossn_sum_point.forEach(async (element, index) => {
-        if(index < 100){
-            con.query(`UPDATE ossn_object_top SET ${type_social_tmp} = ${element.guid} WHERE guid = ${index+1}`, function (err, result) {
-                if(err){
-                    console.log(err);   
-                }
-            });
+    if(data_ossn_sum_point.length >= 100){
+        data_ossn_sum_point.forEach(async (element, index) => {
+            if(index < 100){
+                con.query(`UPDATE ossn_object_top SET ${type_social_tmp} = ${element.guid} WHERE guid = ${index+1}`, function (err, result) {
+                    if(err){
+                        console.log(err);   
+                    }
+                });
+            }
+        });
+    }else{
+        for(let index = 0; index <= 99; index++){
+            if(index + 1 <= data_ossn_sum_point.length){
+                con.query(`UPDATE ossn_object_top SET ${type_social_tmp} = ${data_ossn_sum_point[index].guid} WHERE guid = ${index+1}`, function (err, result) {
+                    if(err){
+                        console.log(err);   
+                    }
+                });
+            }else{
+                con.query(`UPDATE ossn_object_top SET ${type_social_tmp} = ${null} WHERE guid = ${index+1}`, function (err, result) {
+                    if(err){
+                        console.log(err);   
+                    }
+                });
+            }
         }
-    });
-
-    for(let i = 1; i < 100; i++){
-        
     }
+
+
 }
 
 const setCountLike = () => {
