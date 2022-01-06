@@ -9,6 +9,7 @@ function runSortTopTrending(){
 console.log("Waiting to run");
 var index = 0;
 
+//runSortTopTrending();
 
 //Chay moi 15giay
 // schedule.scheduleJob("*/15 * * * * *", function() {
@@ -19,7 +20,7 @@ var index = 0;
 
 
 //Chy luc 2h moi ngay
-schedule.scheduleJob({hour: 2, minute: 00}, function() {
+schedule.scheduleJob({hour: 1, minute: 55}, function() {
     index += 1;
     runSortTopTrending();
     console.log("Waiting to run " + index);

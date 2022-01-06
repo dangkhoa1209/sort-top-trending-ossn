@@ -2,8 +2,8 @@
 module.exports.sort = async function(){
     var mysql = require('mysql');
     require('dotenv').config();
+    const config = require('../../config.json');
 
-    //
     const timenow = Math.ceil( (new Date().getTime()) / 1000 ) - 24*60*60;
 
     const tables = {
@@ -32,10 +32,10 @@ module.exports.sort = async function(){
 
 
     var con = mysql.createConnection({
-        host      : process.env.HOST,
-        user      : process.env.USERNAME_DB,
-        password  : process.env.PASSWORD,
-        database  : process.env.DATABASE
+        host      : config.HOST,
+        user      : config.USERNAME,
+        password  : config.PASSWORD,
+        database  : config.DATABASE
     });
 
     con.connect(function(err) {
@@ -368,7 +368,7 @@ module.exports.sort = async function(){
 
 
         return new Promise(resolve => {
-            con.query(`SELECT guid FROM ${tables.ossn_object} WHERE (social_type = ${type_social_tmp} AND time_created >= '${timenow}')`, function (err, result, fields) {
+            con.query(`SELECT guid FROM ${tables.ossn_object} WHERE (social_type = ${type_social_tmp} AND time_created >= '${timenow}' AND post_type = 1)`, function (err, result, fields) {
                 if(err){
                     resolve(false);
                 }else{
