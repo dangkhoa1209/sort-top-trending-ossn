@@ -20,7 +20,7 @@ var index = 0;
 
 
 //Chy luc 2h moi ngay
-schedule.scheduleJob({hour: 1, minute: 55}, function() {
+schedule.scheduleJob({hour: 1, minute: 59}, function() {
     index += 1;
     runSortTopTrending();
     console.log("Waiting to run " + index);
