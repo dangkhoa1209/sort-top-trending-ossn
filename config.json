@@ -1,6 +1,6 @@
 {   
     "HOST": "localhost",
     "USERNAME": "root",
-    "PASSWORD": "hung@123",
+    "PASSWORD": "",
     "DATABASE": "ossn"
 }

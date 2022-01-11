@@ -84,7 +84,6 @@ module.exports.sort = async function(){
                 }
             });
         });
-        
     }
 
     function createData(){
